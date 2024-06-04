@@ -155,6 +155,8 @@ const CheckboxData = mongoose.model('CheckboxData', checkboxSchema);
 app.post('/CBsubmit', async (req, res) => {
     const selectedOptions = req.body.options;
     const email= req.body.regmail;
+    console.log("gfg");
+    console.log(email);
     const CBpresent = await CheckboxData.findOne({ email: email });
 
     if (CBpresent) {
@@ -168,8 +170,11 @@ app.post('/CBsubmit', async (req, res) => {
     });
     await checkboxData.save();
     // res.send('Data saved successfully!');
-    res.redirect("/index");
+    const allTodo = await Todo.find({email: email});
+    const allCB = await CheckboxData.findOne({ email: email });
+    res.render("index", {todo: allTodo , defmail: email , CBoptions: allCB})
 });
+
 
 //script code in ejs will request array of checkboxes from this function and will use it in script.
 app.get('/data', async function(req, res) {
