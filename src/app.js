@@ -35,6 +35,13 @@ app.get("/index", async(req,res)=>{
     res.render("index", {todo: allTodo , defmail: lobhai , CBoptions: allCB})
 });
 
+app.get("/guest", async(req,res)=>{
+    var gmail="guest@gmail.com";
+    const allTodo = await Todo.find({email: gmail});
+    const allCB = await CheckboxData.findOne({ email: gmail });
+    res.render("index", {todo: allTodo , defmail: gmail , CBoptions: allCB})
+});
+
 app.get("/login", (req,res)=>{
     res.render("login");
 });
